@@ -62,4 +62,13 @@ public interface AutoLock extends Lock, AutoCloseable {
      * @see #tryLock(long, TimeUnit)
      */
     AutoLock autoTryLock(long time, TimeUnit unit) throws InterruptedException, TryLockFailedException;
+
+    /**
+     * Disengage the lock.
+     * <p>
+     * Do not throw a checked exception but may throw a {@link RuntimeException}.
+     * </p>
+     */
+    @Override
+    void close();
 }
