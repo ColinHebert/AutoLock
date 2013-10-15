@@ -18,7 +18,7 @@ public class Test {
 
     public void methodA() {
         try {
-            if (!lock.tryLock(10, Time.Unit.SECOND))
+            if (!lock.tryLock(10, TimeUnit.SECONDS))
                 throw new TimeoutException();
             try {
                 // Do something
@@ -38,7 +38,7 @@ public class Test {
     private AutoLock autoLock = new AutoLockWrapper(new ReentrantLock());
 
     public void methodA() {
-        try(AutoLock ignore = autoLock.autoTryLock(10, Time.Unit.SECOND)) {
+        try (AutoLock ignore = autoLock.autoTryLock(10, TimeUnit.SECONDS)) {
             // Do something
         } catch (InterruptedException | TryLockFailedException e) {
             System.err.println("Couldn't obtain the lock");
