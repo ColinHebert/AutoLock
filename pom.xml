@@ -49,6 +49,10 @@
         <url>https://github.com/ColinHebert/AutoLock/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
+    <ciManagement>
+        <system>Travis-CI</system>
+        <url>https://travis-ci.org/ColinHebert/AutoLock</url>
+    </ciManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
