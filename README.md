@@ -1,5 +1,7 @@
 # Auto-Lock
 
+[![Build Status](https://travis-ci.org/ColinHebert/AutoLock.png?branch=master)](https://travis-ci.org/ColinHebert/AutoLock)
+
 Auto-Lock is a library allowing to use a [Lock](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/locks/Lock.html)
 in the [ARM (also known as Try-with-resources)](http://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html)
 syntax.
