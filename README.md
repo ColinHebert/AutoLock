@@ -11,9 +11,10 @@ executed.
 It my be the case that the lock can't be acquired, in which case a `TryLockFailedException` is thrown and must be
 handled.
 
-## Example
+## Examples
 
-This code:
+### TryLock with a timeout
+
 ```java
 public class Test {
     private Lock lock = new ReentrantLock();
@@ -44,6 +45,52 @@ public class Test {
             // Do something
         } catch (InterruptedException | TryLockFailedException e) {
             System.err.println("Couldn't obtain the lock");
+        }
+    }
+}
+```
+
+### Acquiring multiple locks
+
+```java
+public class Test {
+    private Lock lock1 = new ReentrantLock();
+    private Lock lock2 = new ReentrantLock();
+
+    public void methodA() {
+        try {
+            if (!lock1.tryLock())
+                throw new TimeoutException();
+            try {
+                if (!lock2.tryLock())
+                    throw new TimeoutException();
+                try {
+                    // Do something
+                } finally {
+                    lock2.unlock();
+                }
+            } finally {
+                lock1.unlock();
+            }
+        } catch (TimeoutException e) {
+            System.err.println("Couldn't obtain a lock");
+        }
+    }
+}
+```
+
+Becomes:
+```java
+public class Test {
+    private AutoLock autoLock1 = new AutoLockWrapper(new ReentrantLock());
+    private AutoLock autoLock2 = new AutoLockWrapper(new ReentrantLock());
+
+    public void methodA() {
+        try (autoLock1.autoTryLock();
+             autoLock2.autoTryLock()) {
+            // Do something
+        } catch (TryLockFailedException e) {
+            System.err.println("Couldn't obtain a lock ");
         }
     }
 }
